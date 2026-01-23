@@ -1,1 +1,16 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+
+:root {
+--bg-dark: #0b0f14;
+--navbar-dark: #111827;
+--accent: #38bdf8;
+--accent-glow: #22d3ee;
+--text-light: #e5e7eb;
+}
+
+
+body {
+background-color: var(--bg-dark);
+color: var(--text-light);
+}
