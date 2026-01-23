@@ -1,10 +1,11 @@
 import React from 'react'
+import Home from './pages/Home'
 
 const App = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-red-200">
-      
-    </div>
+    <>
+      <Home />
+    </>
   )
 }
 
