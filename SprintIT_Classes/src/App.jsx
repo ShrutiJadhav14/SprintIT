@@ -1,18 +1,18 @@
-import React from 'react'
-import Navbar from './components/Navbar'
-import { BrowserRouter } from 'react-router-dom'
-import Home from './pages/Home'
+import {BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Placement from "./pages/Placement";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Navbar />
-         <Home />
-      </BrowserRouter>
-      
-    </div>
-  )
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/placement" element={<Placement />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
