@@ -1,8 +1,13 @@
 import React from 'react'
+import Navbar from './components/Navbar'
+import { BrowserRouter } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-red-200">
+    <div>
+      <BrowserRouter>
+        <Navbar />
+      </BrowserRouter>
       
     </div>
   )
