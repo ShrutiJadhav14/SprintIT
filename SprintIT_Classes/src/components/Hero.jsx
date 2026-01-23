@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import ScrollIndicator from "./ScrollIndicator";
 
 export default function Hero() {
   return (
@@ -108,8 +109,10 @@ export default function Hero() {
             className="relative rounded-3xl shadow-2xl shadow-black/50"
           />
         </motion.div>
+        <ScrollIndicator />
 
       </div>
+      
     </section>
   );
 }

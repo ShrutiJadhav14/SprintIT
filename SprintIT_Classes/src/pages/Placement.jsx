@@ -6,7 +6,6 @@ import p2 from "../assets/images/placement2.jpg";
 import p3 from "../assets/images/placement3.jpg";
 import p4 from "../assets/images/placement4.jpg";
 import p5 from "../assets/images/placement5.jpg";
-import Footer from "../components/Footer";
 
 /* Gallery Images */
 const galleryImages = [p1, p2, p3, p4, p5];
@@ -164,8 +163,6 @@ const Placement = () => {
           Enroll Now
         </button>
       </div>
-
-      <Footer />
     </section>
 
   );
