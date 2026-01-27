@@ -71,6 +71,8 @@ export default function CourseDetails() {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const [showDemo, setShowDemo] = useState(false);
+  const [name, setName] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   const course = courseDetailsData[courseId];
 
@@ -205,35 +207,87 @@ export default function CourseDetails() {
       </a>
 
       {/* ✅ DEMO MODAL */}
-      {showDemo && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-          <div className="bg-slate-900 p-8 rounded-xl w-[90%] max-w-md">
-            <h3 className="text-xl font-bold mb-4">Book Free Demo</h3>
-            <input
-              placeholder="Your Name"
-              className="w-full mb-3 p-2 rounded bg-black border border-white/10"
-            />
-            <input
-              placeholder="Mobile Number"
-              className="w-full mb-4 p-2 rounded bg-black border border-white/10"
-            />
-            <div className="flex gap-4">
-              <button
-                onClick={() => setShowDemo(false)}
-                className="w-full border border-white/20 py-2 rounded"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setShowDemo(false)}
-                className="w-full bg-cyan-500 text-black py-2 rounded font-semibold"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
+        {showDemo && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center z-50">
+            {!submitted ? (
+            <motion.div
+                initial={{ scale: 0.85, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-slate-900 p-8 rounded-2xl w-[90%] max-w-md border border-white/10"
+            >
+                <h3 className="text-2xl font-bold mb-6 text-center">
+                Book <span className="text-cyan-400">Free Demo</span>
+                </h3>
+
+                <input
+                placeholder="Your Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full mb-4 p-3 rounded bg-black border border-white/10
+                            focus:border-cyan-400 outline-none"
+                />
+
+                <input
+                value={course.title}
+                disabled
+                className="w-full mb-6 p-3 rounded bg-black border border-white/10 text-slate-400"
+                />
+
+                <div className="flex gap-4">
+                <button
+                    onClick={() => setShowDemo(false)}
+                    className="w-full border border-white/20 py-2 rounded"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    onClick={() => {
+                    if (!name.trim()) return;
+                    setSubmitted(true);
+
+                    setTimeout(() => {
+                        const message = `Hi Sprint IT Academy,%0A
+        I booked a free demo for ${course.title}.%0A
+        My name is ${name}`;
+
+                        window.location.href = `https://wa.me/919999999999?text=${message}`;
+                    }, 2000);
+                    }}
+                    className="w-full bg-cyan-500 text-black py-2 rounded font-semibold"
+                >
+                    Submit
+                </button>
+                </div>
+            </motion.div>
+            ) : (
+            /* ✅ SUCCESS STATE */
+            <motion.div
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-slate-900 p-10 rounded-2xl text-center border border-white/10"
+            >
+                <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200 }}
+                className="mx-auto w-16 h-16 rounded-full bg-cyan-500
+                            flex items-center justify-center text-black text-3xl mb-6"
+                >
+                ✓
+                </motion.div>
+
+                <h4 className="text-xl font-bold mb-2">
+                Demo Booked Successfully!
+                </h4>
+                <p className="text-slate-400">
+                Redirecting to WhatsApp...
+                </p>
+            </motion.div>
+            )}
         </div>
-      )}
+        )}
+
     </>
   );
 }
