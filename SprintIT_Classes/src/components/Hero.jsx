@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import ScrollIndicator from "./ScrollIndicator";
+import coding from "../assets/images/coding.jpg";
 
 export default function Hero() {
   return (
@@ -9,12 +10,12 @@ export default function Hero() {
       <motion.div
         animate={{ y: [0, 40, 0] }}
         transition={{ duration: 12, repeat: Infinity }}
-        className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
+        className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl"
       />
       <motion.div
         animate={{ y: [0, -30, 0] }}
         transition={{ duration: 14, repeat: Infinity }}
-        className="absolute bottom-20 right-20 w-[28rem] h-[28rem] bg-violet-500/20 rounded-full blur-3xl"
+        className="absolute bottom-10 right-10 w-80 h-80 bg-violet-500/20 rounded-full blur-3xl"
       />
 
       {/* Subtle Grid Texture */}
@@ -33,15 +34,15 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 3, repeat: Infinity }}
-            className="inline-flex items-center gap-3 mb-8 px-5 py-2 rounded-full
+            className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full
                        bg-slate-900/70 backdrop-blur border border-slate-800
-                       text-slate-300 text-sm"
+                       text-slate-300 text-sm font-medium"
           >
             🚀 Industry-Oriented IT Training
           </motion.div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl font-extrabold leading-tight text-slate-100">
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-slate-100">
             Shape Your
             <span className="block mt-2 bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-500 bg-clip-text text-transparent animate-gradient">
               Tech Career
@@ -50,35 +51,34 @@ export default function Hero() {
           </h1>
 
           {/* Subtext */}
-          <p className="mt-8 text-lg text-slate-400 max-w-xl leading-relaxed">
+          <p className="mt-6 text-lg text-slate-400 max-w-lg leading-relaxed">
             Learn from industry mentors. Build real-world projects.
             Get placement-ready with Sprint IT Academy’s
             elite training ecosystem.
           </p>
 
           {/* CTA Buttons */}
-          <div className="mt-12 flex flex-wrap gap-6">
+          <div className="mt-10 flex flex-wrap gap-4">
             <motion.button
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500
-                         text-black font-semibold shadow-xl shadow-cyan-500/40"
+              className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500
+                         text-black font-semibold shadow-lg shadow-cyan-500/30"
             >
               Explore Courses
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.05 }}
-              className="px-8 py-4 rounded-xl border border-slate-700
-                         text-slate-200 hover:border-cyan-400 hover:text-cyan-400
-                         transition"
+              className="px-6 py-3 rounded-xl border border-slate-700
+                         text-slate-200 hover:border-cyan-400 hover:text-cyan-400 transition"
             >
               Book Free Demo
             </motion.button>
           </div>
 
           {/* Trust Indicators */}
-          <div className="mt-12 flex gap-10 text-sm text-slate-400">
+          <div className="mt-12 flex gap-8 text-sm text-slate-400">
             <div>
               <span className="text-cyan-400 font-bold text-xl">12K+</span>
               <br /> Learners
@@ -96,23 +96,22 @@ export default function Hero() {
 
         {/* RIGHT VISUAL */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
-          className="relative"
+          className="relative flex justify-center md:justify-end"
         >
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-cyan-500/20 to-violet-500/20 blur-xl" />
-
+          
           <img
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+            src={coding}
             alt="IT Training"
-            className="relative rounded-3xl shadow-2xl shadow-black/50"
+            className="relative max-h-[500px] w-auto md:w-[28rem] rounded-3xl shadow-2xl shadow-black/50 object-cover"
           />
         </motion.div>
-        <ScrollIndicator />
 
+        <ScrollIndicator />
       </div>
-      
     </section>
   );
 }
