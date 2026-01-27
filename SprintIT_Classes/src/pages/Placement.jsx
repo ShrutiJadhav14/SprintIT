@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* Images */
 import p1 from "../assets/images/placement1.jpg";
@@ -7,10 +8,8 @@ import p3 from "../assets/images/placement3.jpg";
 import p4 from "../assets/images/placement4.jpg";
 import p5 from "../assets/images/placement5.jpg";
 
-/* Gallery Images */
 const galleryImages = [p1, p2, p3, p4, p5];
 
-/* Placement Stats */
 const placementData = [
   { company: "TCS", count: "120+" },
   { company: "Infosys", count: "95+" },
@@ -20,7 +19,6 @@ const placementData = [
   { company: "Cognizant", count: "55+" },
 ];
 
-/* Student Reviews */
 const reviews = [
   {
     name: "Amit Patil",
@@ -45,109 +43,220 @@ const reviews = [
   },
 ];
 
-const Placement = () => {
-  /* Gallery Slider */
+export default function Placement() {
   const [current, setCurrent] = useState(0);
   const [pauseGallery, setPauseGallery] = useState(false);
+  const [reviewIndex, setReviewIndex] = useState(0);
+  const [pauseReview, setPauseReview] = useState(false);
 
-  /* Auto slide gallery */
+  /* Auto Gallery */
   useEffect(() => {
     if (pauseGallery) return;
-
-    const timer = setTimeout(() => {
-      setCurrent((prev) =>
-        prev === galleryImages.length - 1 ? 0 : prev + 1
-      );
-    }, 2000);
-
+    const timer = setTimeout(
+      () => setCurrent((p) => (p + 1) % galleryImages.length),
+      2000
+    );
     return () => clearTimeout(timer);
   }, [current, pauseGallery]);
 
+  /* Auto Reviews */
+  useEffect(() => {
+    if (pauseReview) return;
+    const timer = setTimeout(
+      () => setReviewIndex((p) => (p + 1) % reviews.length),
+      2500
+    );
+    return () => clearTimeout(timer);
+  }, [reviewIndex, pauseReview]);
+
+  const prevReview = () => {
+    setReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  };
+
+  const nextReview = () => {
+    setReviewIndex((prev) => (prev + 1) % reviews.length);
+  };
+
   return (
-    <section className="min-h-screen px-6 py-16">
-      {/* Heading */}
-      <div className="text-center max-w-3xl mx-auto">
-        <h1 className="text-4xl font-extrabold">
-          Our <span className="text-[var(--accent)]">Placements</span>
-        </h1>
-        <p className="mt-4 text-gray-400">
-          We help our students get placed in top IT companies with industry-ready skills.
-        </p>
-      </div>
+    <>
+      {/* HERO */}
+      <section className="relative min-h-[80vh] bg-slate-950 flex items-center overflow-hidden">
+        <div className="absolute -top-40 -left-40 w-96 h-96 bg-cyan-500/20 blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-violet-500/20 blur-3xl" />
 
-      {/* Stats */}
-      <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {placementData.map((item, index) => (
-          <div
-            key={index}
-            className="group bg-[#0f172a] border border-white/10 rounded-xl p-8
-            hover:border-[var(--accent)] transition-all duration-300
-            hover:-translate-y-2 hover:shadow-lg hover:shadow-black/50"
+        <div className="relative max-w-7xl mx-auto px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-6xl font-extrabold text-slate-100"
           >
-            <h2 className="text-3xl font-extrabold text-[var(--accent)]">
-              {item.count}
-            </h2>
-            <p className="mt-2 text-lg font-semibold group-hover:text-white transition">
-              Students Placed
-            </p>
-            <p className="mt-1 text-sm text-gray-400">
-              in {item.company}
-            </p>
-          </div>
-        ))}
-      </div>
+            Our
+            <span className="block mt-2 bg-gradient-to-r from-cyan-400 to-violet-500 bg-clip-text text-transparent">
+              Placement Success
+            </span>
+          </motion.h1>
 
-      {/* Placement Gallery */}
-      <div className="mt-24">
-        <h2 className="text-3xl font-bold text-center mb-10">
-          Placement <span className="text-[var(--accent)]">Gallery</span>
-        </h2>
-
-        <div
-          className="relative max-w-4xl mx-auto"
-          onMouseEnter={() => setPauseGallery(true)}
-          onMouseLeave={() => setPauseGallery(false)}
-        >
-          <div className="relative h-[260px] sm:h-[360px] rounded-xl overflow-hidden border border-white/10">
-            {galleryImages.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt="Placement"
-                className={`absolute inset-0 w-full h-full object-cover
-                transition-all duration-700 ease-in-out
-                ${
-                  index === current
-                    ? "opacity-100 scale-100 z-10"
-                    : "opacity-0 scale-110 z-0"
-                }`}
-              />
-            ))}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-20" />
-          </div>
-
-          {/* Dots */}
-          <div className="flex justify-center gap-4 mt-8">
-            {galleryImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrent(index)}
-                className={`w-3 h-3 rounded-full transition ${
-                  current === index
-                    ? "bg-[var(--accent)] scale-125"
-                    : "bg-white/40 hover:bg-white/70"
-                }`}
-              />
-            ))}
-          </div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-8 max-w-3xl mx-auto text-lg text-slate-400"
+          >
+            Industry-ready training with proven placement records across top IT
+            companies.
+          </motion.p>
         </div>
-      </div>
+      </section>
 
-      {/* Student Reviews */}
-      <ReviewSlider />
+      {/* STATS */}
+      <section className="px-6 py-20">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
+        >
+          {placementData.map((item, i) => (
+            <motion.div
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { opacity: 1, y: 0 },
+              }}
+              className="bg-[#0f172a] border border-white/10 rounded-xl p-8
+              hover:border-[var(--accent)]
+              hover:-translate-y-2 transition-all duration-300"
+            >
+              <h2 className="text-3xl font-extrabold text-[var(--accent)]">
+                {item.count}
+              </h2>
+              <p className="mt-2 font-semibold">Students Placed</p>
+              <p className="text-sm text-gray-400">in {item.company}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+    {/* Placement Gallery */}
+    <section className="px-6 py-24">
+    <motion.h2
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-3xl font-bold text-center mb-12"
+    >
+        Placement <span className="text-[var(--accent)]">Gallery</span>
+    </motion.h2>
+
+    <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="relative max-w-4xl mx-auto"
+        onMouseEnter={() => setPauseGallery(true)}
+        onMouseLeave={() => setPauseGallery(false)}
+    >
+        {/* Image Container */}
+        <div className="relative h-[260px] sm:h-[360px] rounded-xl overflow-hidden border border-white/10">
+        {galleryImages.map((img, i) => (
+            <motion.img
+            key={i}
+            src={img}
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700
+            ${i === current ? "opacity-100 scale-100 z-10" : "opacity-0 scale-110 z-0"}`}
+            />
+        ))}
+        </div>
+
+        {/* Dots */}
+        <div className="flex justify-center gap-4 mt-8">
+        {galleryImages.map((_, i) => (
+            <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className={`w-3 h-3 rounded-full transition ${
+                current === i
+                ? "bg-[var(--accent)] scale-125"
+                : "bg-white/40 hover:bg-white/70"
+            }`}
+            />
+        ))}
+        </div>
+    </motion.div>
+    </section>
+
+
+      {/* REVIEWS */}
+      <section className="px-6 py-24">
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-3xl font-bold text-center mb-12"
+        >
+          Student <span className="text-[var(--accent)]">Reviews</span>
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto flex items-center justify-center gap-6"
+          onMouseEnter={() => setPauseReview(true)}
+          onMouseLeave={() => setPauseReview(false)}
+        >
+          {/* Left Arrow */}
+          <button
+            onClick={prevReview}
+            className="text-[var(--accent)] text-3xl px-3 hover:scale-110 transition"
+          >
+            ‹
+          </button>
+
+          <div className="w-full relative min-h-[220px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={reviewIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="group bg-white/5 border border-white/10 rounded-2xl p-8
+                  text-center backdrop-blur-md
+                  hover:-translate-y-2 hover:scale-[1.02]
+                  hover:border-[var(--accent)]
+                  transition-all mx-auto max-w-xl"
+              >
+                <div className="text-yellow-400 mb-4">★★★★★</div>
+                <p className="text-gray-300 text-lg">“{reviews[reviewIndex].review}”</p>
+                <div className="mt-6">
+                  <h4 className="font-bold">{reviews[reviewIndex].name}</h4>
+                  <p className="text-sm text-gray-400">
+                    {reviews[reviewIndex].role} · {reviews[reviewIndex].company}
+                  </p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={nextReview}
+            className="text-[var(--accent)] text-3xl px-3 hover:scale-110 transition"
+          >
+            ›
+          </button>
+        </motion.div>
+      </section>
 
       {/* CTA */}
-      <div className="mt-24 text-center">
+      <section className="mt-24 text-center px-6 py-16">
         <h2 className="text-2xl md:text-3xl font-bold">
           Start Your <span className="text-[var(--accent)]">Placement Journey</span>
         </h2>
@@ -162,87 +271,7 @@ const Placement = () => {
         >
           Enroll Now
         </button>
-      </div>
-    </section>
-
+      </section>
+    </>
   );
-};
-
-/* ⭐ Review Slider Component */
-const ReviewSlider = () => {
-  const [index, setIndex] = useState(0);
-  const [pause, setPause] = useState(false);
-
-  useEffect(() => {
-    if (pause) return;
-
-    const timer = setTimeout(() => {
-      setIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [index, pause]);
-
-  return (
-    <div
-      className="mt-28 max-w-4xl mx-auto px-4"
-      onMouseEnter={() => setPause(true)}
-      onMouseLeave={() => setPause(false)}
-    >
-      <h2 className="text-3xl font-bold text-center mb-12">
-        Student <span className="text-[var(--accent)]">Reviews</span>
-      </h2>
-
-      <div className="relative overflow-hidden">
-        {reviews.map((item, i) => (
-          <div
-            key={i}
-            className={`transition-all duration-700 ease-in-out
-            ${
-              i === index
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-10 absolute inset-0"
-            }`}
-          >
-            <div
-                className="group bg-white/5 backdrop-blur-md border border-white/10
-                rounded-2xl p-8 text-center
-                shadow-lg shadow-black/40
-                transition-all duration-300
-                hover:-translate-y-2 hover:scale-[1.02]
-                hover:border-[var(--accent)]
-                hover:shadow-[0_0_25px_rgba(34,211,238,0.15)]"
-            >
-
-              <div className="text-yellow-400 mb-4 transition group-hover:scale-110">★★★★★</div>
-              <p className="text-gray-300 text-lg">“{item.review}”</p>
-              <div className="mt-6">
-                <h4 className="font-bold text-white">{item.name}</h4>
-                <p className="text-sm text-gray-400">
-                  {item.role} · {item.company}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Dots */}
-      <div className="flex justify-center gap-3 mt-8">
-        {reviews.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`w-3 h-3 rounded-full transition ${
-              index === i
-                ? "bg-[var(--accent)] scale-125"
-                : "bg-white/30 hover:bg-white/60"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default Placement;
+}
