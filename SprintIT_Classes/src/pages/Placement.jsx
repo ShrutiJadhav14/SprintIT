@@ -7,6 +7,7 @@ import p2 from "../assets/images/placement2.jpg";
 import p3 from "../assets/images/placement3.jpg";
 import p4 from "../assets/images/placement4.jpg";
 import p5 from "../assets/images/placement5.jpg";
+import { useNavigate } from "react-router-dom";
 
 const galleryImages = [p1, p2, p3, p4, p5];
 
@@ -77,10 +78,17 @@ export default function Placement() {
     setReviewIndex((prev) => (prev + 1) % reviews.length);
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       {/* HERO */}
-      <section className="relative min-h-[80vh] bg-slate-950 flex items-center overflow-hidden">
+      <motion.section
+       initial={{ opacity: 0, y: 50 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       viewport={{ once: true }}
+       transition={{ duration: 0.8 }}
+       className="relative min-h-[80vh] bg-slate-950 flex items-center overflow-hidden">
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-cyan-500/20 blur-3xl" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-violet-500/20 blur-3xl" />
 
@@ -109,10 +117,15 @@ export default function Placement() {
             companies.
           </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       {/* STATS */}
-      <section className="px-6 py-20">
+      <motion.section
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+       className="px-6 py-20">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -141,10 +154,14 @@ export default function Placement() {
             </motion.div>
           ))}
         </motion.div>
-      </section>
+      </motion.section>
 
     {/* Placement Gallery */}
-    <section className="px-6 py-24">
+    <motion.section
+     initial={{ opacity: 0, y: 30 }}
+     whileInView={{ opacity: 1, y: 0 }}
+     viewport={{ once: true }}  
+     className="px-6 py-24">
     <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -189,11 +206,16 @@ export default function Placement() {
         ))}
         </div>
     </motion.div>
-    </section>
+    </motion.section>
 
 
       {/* REVIEWS */}
-      <section className="px-6 py-24">
+      <motion.section 
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+      className="px-6 py-24">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -253,10 +275,15 @@ export default function Placement() {
             ›
           </button>
         </motion.div>
-      </section>
+      </motion.section>
 
       {/* CTA */}
-      <section className="mt-24 text-center px-6 py-16">
+      <motion.section
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+       className="mt-24 text-center px-6 py-16">
         <h2 className="text-2xl md:text-3xl font-bold">
           Start Your <span className="text-[var(--accent)]">Placement Journey</span>
         </h2>
@@ -265,13 +292,14 @@ export default function Placement() {
         </p>
 
         <button
+          onClick={() => navigate("/courses")}
           className="mt-8 px-10 py-3 rounded-md font-semibold
           bg-[var(--accent)] text-black
           hover:bg-[var(--accent-glow)] transition"
         >
           Enroll Now
         </button>
-      </section>
+      </motion.section>
     </>
   );
 }

@@ -78,7 +78,12 @@ export default function Courses() {
       </div>
 
       {/* COURSE CARDS */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <motion.div
+       initial={{ opacity: 0, y: 40 }}
+       whileInView={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.8, ease: "easeOut" }}
+       viewport={{ once: true }}
+       className="max-w-7xl mx-auto px-6 py-20">
         <h2 className="text-3xl font-bold text-center mb-12">
           Our <span className="text-cyan-400">Courses</span>
         </h2>
@@ -109,84 +114,99 @@ export default function Courses() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* LEARNING PROCESS */}
-      <div className="bg-slate-900 py-20">
-    <h2 className="text-3xl font-bold text-center mb-12">
-        Learning <span className="text-cyan-400">Process</span>
-    </h2>
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+       className="bg-slate-900 py-20">
+        <h2 className="text-3xl font-bold text-center mb-12">
+            Learning <span className="text-cyan-400">Process</span>
+        </h2>
 
-    <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
-        {[
-        { title: "Concepts", icon: "📘" },
-        { title: "Assignments", icon: "📝" },
-        { title: "Projects", icon: "💻" },
-        { title: "Mock Interviews", icon: "🎯" },
-        ].map((step, i) => (
-        <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            whileHover={{ y: -10 }}
-            transition={{ duration: 0.4 }}
-            className="group relative overflow-hidden
-            bg-white/5 border border-white/10 rounded-xl p-6 text-center
-            hover:border-cyan-400 transition-all duration-300"
-        >
-            {/* Glow Effect */}
-            <div
-            className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-violet-500/20
-            opacity-0 group-hover:opacity-100 transition duration-300 blur-xl"
-            />
-
-            {/* Content */}
-            <div className="relative z-10">
-            <div
-                className="text-4xl mb-4 transform transition duration-300
-                group-hover:scale-110"
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+            {[
+            { title: "Concepts", icon: "📘" },
+            { title: "Assignments", icon: "📝" },
+            { title: "Projects", icon: "💻" },
+            { title: "Mock Interviews", icon: "🎯" },
+            ].map((step, i) => (
+            <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -10 }}
+                transition={{ duration: 0.4 }}
+                className="group relative overflow-hidden
+                bg-white/5 border border-white/10 rounded-xl p-6 text-center
+                hover:border-cyan-400 transition-all duration-300"
             >
-                {step.icon}
-            </div>
+                {/* Glow Effect */}
+                <div
+                className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-violet-500/20
+                opacity-0 group-hover:opacity-100 transition duration-300 blur-xl"
+                />
 
-            <h3
-                className="font-bold text-lg mb-2
-                group-hover:text-cyan-400 transition"
-            >
-                {step.title}
-            </h3>
+                {/* Content */}
+                <div className="relative z-10">
+                <div
+                    className="text-4xl mb-4 transform transition duration-300
+                    group-hover:scale-110"
+                >
+                    {step.icon}
+                </div>
 
-            <p className="text-slate-400 text-sm">
-                Structured learning with mentor guidance and real-world examples.
-            </p>
-            </div>
+                <h3
+                    className="font-bold text-lg mb-2
+                    group-hover:text-cyan-400 transition"
+                >
+                    {step.title}
+                </h3>
 
-            {/* Bottom Accent Line */}
-            <span
-            className="absolute bottom-0 left-0 h-[2px] w-0
-            bg-gradient-to-r from-cyan-400 to-violet-500
-            group-hover:w-full transition-all duration-500"
-            />
-        </motion.div>
-        ))}
-    </div>
-      </div>
+                <p className="text-slate-400 text-sm">
+                    Structured learning with mentor guidance and real-world examples.
+                </p>
+                </div>
+
+                {/* Bottom Accent Line */}
+                <span
+                className="absolute bottom-0 left-0 h-[2px] w-0
+                bg-gradient-to-r from-cyan-400 to-violet-500
+                group-hover:w-full transition-all duration-500"
+                />
+            </motion.div>
+            ))}
+        </div>
+      </motion.div>
 
       {/* PLACEMENT SUPPORT */}
-      <div className="py-20 max-w-6xl mx-auto px-6 text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+       className="py-20 max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-3xl font-bold">
           Placement <span className="text-cyan-400">Support</span>
         </h2>
         <p className="mt-4 text-slate-400 max-w-2xl mx-auto">
           Resume building, mock interviews, aptitude training and continuous placement assistance.
         </p>
-      </div>
+      </motion.div>
 
       <AICourseSuggestion />
 
       {/* TESTIMONIALS */}
-      <div className="bg-slate-900 py-20">
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+        className="bg-slate-900 py-20">
         <h2 className="text-3xl font-bold text-center mb-12">
           Student <span className="text-cyan-400">Testimonials</span>
         </h2>
@@ -203,10 +223,15 @@ export default function Courses() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* FAQ */}
-      <div className="py-20 max-w-4xl mx-auto px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+       className="py-20 max-w-4xl mx-auto px-6">
         <h2 className="text-3xl font-bold text-center mb-12">
           FAQs
         </h2>
@@ -224,17 +249,22 @@ export default function Courses() {
             )}
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {/* CTA */}
-      <div className="py-20 text-center bg-gradient-to-r from-cyan-500 to-violet-600">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true }}
+       className="py-20 text-center bg-gradient-to-r from-cyan-500 to-violet-600">
         <h2 className="text-3xl font-bold text-black">
           Not sure which course to choose?
         </h2>
         <button onClick={() => navigate("/contact")} className="mt-6 px-10 py-3 bg-black text-white rounded-md font-semibold hover:opacity-90">
           Talk to Counselor
         </button>
-      </div>
+      </motion.div>
 
     </section>
   );

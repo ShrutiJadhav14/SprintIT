@@ -1,8 +1,12 @@
 import { motion } from "framer-motion";
 import ScrollIndicator from "./ScrollIndicator";
 import coding from "../assets/images/coding.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-screen bg-slate-950 overflow-hidden flex items-center">
 
@@ -62,6 +66,7 @@ export default function Hero() {
             <motion.button
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/courses")}
               className="px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-violet-500
                          text-black font-semibold shadow-lg shadow-cyan-500/30"
             >
@@ -70,6 +75,7 @@ export default function Hero() {
 
             <motion.button
               whileHover={{ scale: 1.05 }}
+              onClick={() => navigate("/courses")}
               className="px-6 py-3 rounded-xl border border-slate-700
                          text-slate-200 hover:border-cyan-400 hover:text-cyan-400 transition"
             >
