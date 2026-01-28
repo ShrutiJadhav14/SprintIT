@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 
 /* Images */
 import p1 from "../assets/images/placement1.jpg";
@@ -9,16 +9,46 @@ import p4 from "../assets/images/placement4.jpg";
 import p5 from "../assets/images/placement5.jpg";
 import { useNavigate } from "react-router-dom";
 
+function Counter({ value }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (!isInView || hasRun.current) return;
+
+    hasRun.current = true;
+
+    let start = 0;
+    const duration = 800;
+    const step = Math.ceil(value / (duration / 16));
+
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= value) {
+        setCount(value);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [isInView, value]);
+
+  return <span ref={ref}>{count}+</span>;
+}
+
 const galleryImages = [p1, p2, p3, p4, p5];
 
-const placementData = [
-  { company: "TCS", count: "120+" },
-  { company: "Infosys", count: "95+" },
-  { company: "Capgemini", count: "80+" },
-  { company: "Accenture", count: "70+" },
-  { company: "Wipro", count: "60+" },
-  { company: "Cognizant", count: "55+" },
+const placementStats = [
+  { title: "Total Students Placed", value: 300, animated: true },
+  { title: "Hiring Companies", value: "50+" },
+  { title: "Placement Success Rate", value: "95%" },
 ];
+
+
 
 const reviews = [
   {
@@ -49,6 +79,28 @@ export default function Placement() {
   const [pauseGallery, setPauseGallery] = useState(false);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [pauseReview, setPauseReview] = useState(false);
+  const placementProcess = [
+  {
+    step: "01",
+    title: "Skill Training",
+    desc: "Industry-focused training with real-time projects & mentorship",
+  },
+  {
+    step: "02",
+    title: "Mock Interviews",
+    desc: "Technical + HR mock interviews with expert feedback",
+  },
+  {
+    step: "03",
+    title: "Resume & Profile",
+    desc: "ATS-friendly resume & LinkedIn profile optimization",
+  },
+  {
+    step: "04",
+    title: "Placement Support",
+    desc: "Interview scheduling and company referrals till placement",
+  },
+];
 
   /* Auto Gallery */
   useEffect(() => {
@@ -79,6 +131,8 @@ export default function Placement() {
   };
 
   const navigate = useNavigate();
+
+
 
   return (
     <>
@@ -118,43 +172,65 @@ export default function Placement() {
           </motion.p>
         </div>
       </motion.section>
+       <motion.section
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="px-6 py-24 relative"
+>
+  {/* soft glow */}
+  <div className="absolute left-1/2 top-0 -translate-x-1/2 w-[500px] h-[200px] bg-[var(--accent)]/10 blur-3xl" />
 
-      {/* STATS */}
-      <motion.section
-        initial={{ opacity: 0, y: 40 }} 
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        viewport={{ once: true }}
-       className="px-6 py-20">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            visible: { transition: { staggerChildren: 0.15 } },
-          }}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto"
-        >
-          {placementData.map((item, i) => (
-            <motion.div
-              key={i}
-              variants={{
-                hidden: { opacity: 0, y: 40 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              className="bg-[#0f172a] border border-white/10 rounded-xl p-8
-              hover:border-[var(--accent)]
-              hover:-translate-y-2 transition-all duration-300"
-            >
-              <h2 className="text-3xl font-extrabold text-[var(--accent)]">
-                {item.count}
-              </h2>
-              <p className="mt-2 font-semibold">Students Placed</p>
-              <p className="text-sm text-gray-400">in {item.company}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.section>
+  <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
+    <div className="bg-[#0b1220] border border-white/10 rounded-2xl p-10 text-center hover:border-[var(--accent)] transition">
+      <h2 className="text-5xl font-extrabold text-[var(--accent)]">
+        <Counter value={300} />
+      </h2>
+      <p className="mt-4 text-gray-300 font-semibold">
+        Total Students Placed
+      </p>
+    </div>
+
+    <div className="bg-[#0b1220] border border-white/10 rounded-2xl p-10 text-center hover:border-[var(--accent)] transition">
+      <h2 className="text-5xl font-extrabold text-[var(--accent)]">50+</h2>
+      <p className="mt-4 text-gray-300 font-semibold">
+        Hiring Companies
+      </p>
+    </div>
+
+    <div className="bg-[#0b1220] border border-white/10 rounded-2xl p-10 text-center hover:border-[var(--accent)] transition">
+      <h2 className="text-5xl font-extrabold text-[var(--accent)]">95%</h2>
+      <p className="mt-4 text-gray-300 font-semibold">
+        Placement Success Rate
+      </p>
+    </div>
+  </div>
+</motion.section>
+
+<motion.section
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+  className="px-6 py-16"
+>
+  <div className="max-w-6xl mx-auto bg-[#0b1220] border border-white/10 rounded-2xl p-10 text-center">
+    <p className="text-gray-400 mb-8">
+      Our students are placed in leading IT companies
+    </p>
+
+    <div className="flex flex-wrap justify-center gap-10 text-lg font-semibold text-gray-300">
+      <span className="hover:text-[var(--accent)] transition">TCS</span>
+      <span className="hover:text-[var(--accent)] transition">Infosys</span>
+      <span className="hover:text-[var(--accent)] transition">Capgemini</span>
+      <span className="hover:text-[var(--accent)] transition">Accenture</span>
+      <span className="hover:text-[var(--accent)] transition">Wipro</span>
+      <span className="text-gray-500">+ many more</span>
+    </div>
+  </div>
+</motion.section>
+
 
     {/* Placement Gallery */}
     <motion.section
@@ -208,6 +284,51 @@ export default function Placement() {
     </motion.div>
     </motion.section>
 
+    {/* PLACEMENT PROCESS */}
+<motion.section
+  initial={{ opacity: 0, y: 40 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+  className="px-6 py-24 bg-white/5"
+>
+  <motion.h2
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="text-3xl font-bold text-center mb-16"
+  >
+    Placement <span className="text-[var(--accent)]">Process</span>
+  </motion.h2>
+
+  <div className="max-w-4xl mx-auto space-y-10">
+    {placementProcess.map((item, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, x: i % 2 === 0 ? -40 : 40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="flex gap-6 items-start"
+      >
+        {/* Step Circle */}
+        <div className="flex-shrink-0 w-14 h-14 rounded-full
+          bg-[var(--accent)] text-black
+          flex items-center justify-center font-bold text-lg">
+          {item.step}
+        </div>
+
+        {/* Content */}
+        <div className="bg-[#0f172a] border border-white/10 rounded-xl p-6
+          hover:border-[var(--accent)]
+          transition-all duration-300 w-full">
+          <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+          <p className="text-gray-400">{item.desc}</p>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</motion.section>
 
       {/* REVIEWS */}
       <motion.section 
