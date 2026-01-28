@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 
 const courses = [
   {
-    title: "Full Stack Web Development",
-    desc: "HTML, CSS, JavaScript, React, Node.js with real-world projects.",
+    title: "Java Full Stack Web Development",
+    desc: "HTML, CSS, JS, Servlets, JSP, Spring Boot & more.",
     icon: "💻",
   },
   {
-    title: "Data Science & AI",
-    desc: "Python, ML algorithms, real datasets & industry use-cases.",
+    title: "Data Engineering ",
+    desc: "ETL, Data Warehousing, Big Data & Cloud.",
     icon: "📊",
   },
   {
-    title: "Cyber Security",
-    desc: "Ethical hacking, network security & practical labs.",
-    icon: "🔐",
+    title: "SQL / PLSQL Developer",
+    desc: "Database Design, Queries, Stored Procedures & Performance Tuning.",
+    icon: "🗄️",
   },
 ];
 
