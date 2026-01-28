@@ -4,42 +4,87 @@ import { motion } from "framer-motion";
 
 const courses = [
   {
-    id: "full-stack",
-    name: "Full Stack Web Development",
-    tags: ["coding", "web", "frontend", "backend", "it"],
+    id: "sql-plsql",
+    name: "SQL / PLSQL Developer",
+    tags: ["database", "sql", "backend", "it"],
+    level: "beginner",
   },
   {
-    id: "java-stack",
-    name: "Java Full Stack Development",
-    tags: ["java", "backend", "enterprise", "it"],
+    id: "dotnet-fullstack",
+    name: ".NET Full Stack Developer",
+    tags: ["dotnet", "backend", "enterprise", "it"],
+    level: "advanced",
   },
   {
-    id: "data-science",
-    name: "Python with Data Science",
-    tags: ["python", "data", "analytics", "ml", "it"],
+    id: "java-fullstack",
+    name: "Java Full Stack Developer",
+    tags: ["java", "backend", "web", "it"],
+    level: "advanced",
+  },
+  {
+    id: "data-engineering",
+    name: "Data Engineering",
+    tags: ["data", "bigdata", "backend", "it"],
+    level: "advanced",
+  },
+  {
+    id: "frontend",
+    name: "Frontend Developer",
+    tags: ["frontend", "web", "ui", "coding"],
+    level: "beginner",
+  },
+  {
+    id: "etl-developer",
+    name: "ETL Developer",
+    tags: ["data", "etl", "backend", "it"],
+    level: "intermediate",
+  },
+  {
+    id: "microsoft-tech",
+    name: "Microsoft Technologies",
+    tags: ["dotnet", "backend", "it"],
+    level: "beginner",
+  },
+  {
+    id: "salesforce",
+    name: "Salesforce Engineer",
+    tags: ["crm", "cloud", "enterprise", "it"],
+    level: "beginner",
+  },
+  {
+    id: "python-fullstack",
+    name: "Python Full Stack Developer",
+    tags: ["python", "web", "backend", "coding"],
+    level: "advanced",
   },
 ];
 
 export default function AICourseSuggestion() {
   const navigate = useNavigate();
+
   const [interest, setInterest] = useState("");
   const [background, setBackground] = useState("");
-  const [result, setResult] = useState(null);
+  const [experience, setExperience] = useState("");
+  const [results, setResults] = useState([]);
 
   const suggestCourse = () => {
-    let scores = {};
+    const scoredCourses = courses.map((course) => {
+      let score = 0;
 
-    courses.forEach((course) => {
-      scores[course.id] = 0;
-      if (course.tags.includes(interest)) scores[course.id] += 2;
-      if (course.tags.includes(background)) scores[course.id] += 1;
+      if (course.tags.includes(interest)) score += 3;
+      if (course.tags.includes(background)) score += 1;
+
+      if (experience === course.level) score += 2;
+      if (experience === "beginner" && course.level === "beginner") score += 1;
+
+      return { ...course, score };
     });
 
-    const bestMatch = Object.keys(scores).reduce((a, b) =>
-      scores[a] > scores[b] ? a : b
-    );
+    const topTwo = scoredCourses
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 2);
 
-    setResult(courses.find((c) => c.id === bestMatch));
+    setResults(topTwo);
   };
 
   return (
@@ -61,29 +106,23 @@ export default function AICourseSuggestion() {
         >
           🤖 AI Course Recommendation
         </motion.h2>
-
-        <p className="text-center text-slate-400 mb-12">
-          Answer a few questions and let AI guide your career path
+        <p className="text-center text-slate-400 mb-10">
+          Get the top 2 courses best suited for your profile
         </p>
 
-        {/* Inputs */}
-        <motion.div
-          className="grid md:grid-cols-2 gap-6"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          viewport={{ once: true }}
-        >
+        <div className="grid md:grid-cols-3 gap-6">
           <select
             onChange={(e) => setInterest(e.target.value)}
             className="bg-black border border-white/10 p-4 rounded-lg focus:outline-none
                        focus:border-cyan-400 transition"
           >
-            <option value="">Select Your Interest</option>
-            <option value="coding">Coding</option>
+            <option value="">Primary Interest</option>
             <option value="web">Web Development</option>
-            <option value="java">Java Backend</option>
+            <option value="frontend">Frontend / UI</option>
+            <option value="backend">Backend</option>
             <option value="data">Data / Analytics</option>
+            <option value="sql">Databases</option>
+            <option value="cloud">Cloud / CRM</option>
           </select>
 
           <select
@@ -91,57 +130,81 @@ export default function AICourseSuggestion() {
             className="bg-black border border-white/10 p-4 rounded-lg focus:outline-none
                        focus:border-cyan-400 transition"
           >
-            <option value="">Your Background</option>
+            <option value="">Educational Background</option>
             <option value="it">IT / CS</option>
             <option value="non-it">Non-IT</option>
           </select>
-        </motion.div>
 
-        {/* CTA */}
-        <div className="text-center mt-10">
-          <motion.button
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.95 }}
-            disabled={!interest || !background}
-            onClick={suggestCourse}
-            className={`px-10 py-4 rounded-xl font-semibold transition
-              ${
-                interest && background
-                  ? "bg-gradient-to-r from-cyan-500 to-violet-500 text-black shadow-lg"
-                  : "bg-slate-700 text-slate-400 cursor-not-allowed"
-              }`}
+          <select
+            onChange={(e) => setExperience(e.target.value)}
+            className="bg-black border border-white/10 p-3 rounded"
           >
-            Suggest Best Course 🚀
-          </motion.button>
+            <option value="">Experience Level</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+          </select>
         </div>
 
-        {/* Result */}
-        {result && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mt-14 bg-white/5 border border-white/10 rounded-2xl p-8 text-center
-                       hover:border-cyan-400/60 transition relative"
+        <div className="text-center mt-10">
+          <button
+            onClick={suggestCourse}
+            className="px-10 py-3 bg-cyan-500 text-black rounded-md font-semibold"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-violet-500/10 blur-2xl rounded-2xl" />
+            Suggest Courses
+          </button>
+        </div>
 
-            <div className="relative">
-              <h3 className="text-xl font-bold mb-2">🎯 Best Match for You</h3>
-              <p className="text-2xl font-extrabold text-cyan-400 mb-6">
-                {result.name}
-              </p>
+     {results.length > 0 && (
+  <div className="mt-14 grid md:grid-cols-2 gap-6">
+    {results.map((course, i) => {
+      const isBest = i === 0;
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                onClick={() => navigate(`/courses/${result.id}`)}
-                className="px-8 py-3 bg-violet-500 rounded-lg font-semibold"
-              >
-                View Course Details →
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
+      return (
+        <div
+          key={course.id}
+          className={`relative p-8 rounded-xl text-center border
+            ${isBest
+              ? "bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border-cyan-400 shadow-lg shadow-cyan-500/20"
+              : "bg-white/5 border-white/10"
+            }`}
+        >
+          {/* BEST CHOICE BADGE */}
+          {isBest && (
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2
+              bg-cyan-500 text-black text-xs font-bold px-4 py-1 rounded-full">
+              ⭐ Best Choice
+            </span>
+          )}
+
+          <span className="text-sm text-slate-400">
+            Rank #{i + 1}
+          </span>
+
+          <h3
+            className={`text-xl font-bold mt-3 mb-5
+              ${isBest ? "text-cyan-300" : "text-white"}
+            `}
+          >
+            {course.name}
+          </h3>
+
+          <button
+            onClick={() => navigate(`/courses/${course.id}`)}
+            className={`px-6 py-2 rounded-md font-semibold transition
+              ${isBest
+                ? "bg-cyan-500 text-black hover:bg-cyan-400"
+                : "bg-violet-500 hover:bg-violet-400"
+              }`}
+          >
+            View Course Details
+          </button>
+        </div>
+      );
+    })}
+  </div>
+)}
+
       </motion.div>
     </section>
   );

@@ -3,69 +3,181 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const courseDetailsData = {
-  "full-stack": {
-    title: "Full Stack Web Development",
-    tagline: "Become a job-ready full stack developer",
-    duration: "6 Months",
-    level: "Beginner to Advanced",
+  "sql-plsql": {
+    title: "SQL / PLSQL Developer",
+    tagline: "Master database programming & optimization",
+    duration: "3 Months",
+    level: "Beginner to Intermediate",
     mode: "Offline / Online",
-    stack: ["HTML", "CSS", "JavaScript", "React", "Node.js", "MongoDB"],
+    stack: ["SQL", "PLSQL", "Oracle", "Joins", "Indexes"],
     overview:
-      "This course is designed to transform beginners into industry-ready full stack developers through hands-on projects and real-world problem solving.",
+      "This course focuses on database concepts, advanced SQL queries, stored procedures, functions and performance tuning used in real enterprise projects.",
     modules: [
-      "Web Fundamentals & Git",
-      "Advanced JavaScript",
-      "React & Frontend Architecture",
-      "Backend with Node & Express",
-      "Database Design (MongoDB)",
-      "Deployment & Live Projects",
+      "Database Fundamentals",
+      "Advanced SQL Queries",
+      "PLSQL Programming",
+      "Procedures & Functions",
+      "Triggers & Cursors",
+      "Performance Tuning",
     ],
-    careers: [
-      "Full Stack Developer",
-      "Frontend Developer",
-      "Backend Developer",
-      "Software Engineer",
-    ],
+    careers: ["SQL Developer", "PLSQL Developer", "Database Analyst"],
   },
 
-  "java-stack": {
-    title: "Java Full Stack Development",
-    tagline: "Build enterprise-grade applications",
+  "dotnet-fullstack": {
+    title: ".NET Full Stack Developer",
+    tagline: "Build powerful enterprise applications",
     duration: "5 Months",
     level: "Intermediate",
     mode: "Offline",
-    stack: ["Java", "Spring Boot", "Hibernate", "MySQL"],
+    stack: ["C#", "ASP.NET Core", "SQL Server", "React"],
     overview:
-      "Learn Java full stack development with strong backend foundations and enterprise-level project experience.",
+      "Learn Microsoft’s full stack development using modern frameworks and enterprise architecture.",
     modules: [
-      "Core Java & OOPs",
-      "Advanced Java",
-      "Spring Boot & REST APIs",
-      "Database with MySQL",
-      "Mini & Major Projects",
+      "C# & OOPs",
+      "ASP.NET Core MVC",
+      "Web APIs",
+      "Frontend with React",
+      "SQL Server",
+      "Live Project",
     ],
-    careers: ["Java Developer", "Backend Engineer", "Software Engineer"],
+    careers: [".NET Developer", "Full Stack Developer", "Software Engineer"],
   },
 
-  "data-science": {
-    title: "Python with Data Science",
-    tagline: "Turn data into actionable insights",
+  "java-fullstack": {
+    title: "Java Full Stack Developer",
+    tagline: "Enterprise-grade Java development",
+    duration: "5 Months",
+    level: "Beginner to Advanced",
+    mode: "Offline / Online",
+    stack: ["Java", "Spring Boot", "Hibernate", "React", "MySQL"],
+    overview:
+      "Become a job-ready Java Full Stack Developer with hands-on enterprise projects.",
+    modules: [
+      "Core Java",
+      "Advanced Java",
+      "Spring Boot & REST APIs",
+      "Frontend with React",
+      "Database Integration",
+      "Capstone Project",
+    ],
+    careers: ["Java Developer", "Backend Engineer", "Full Stack Developer"],
+  },
+
+  "data-engineering": {
+    title: "Data Engineering",
+    tagline: "Build scalable data pipelines",
+    duration: "6 Months",
+    level: "Intermediate",
+    mode: "Offline / Online",
+    stack: ["Python", "Spark", "Hadoop", "SQL", "Cloud"],
+    overview:
+      "Learn to design, build and manage big data systems used by modern enterprises.",
+    modules: [
+      "Python for Data",
+      "SQL & Data Warehousing",
+      "ETL Pipelines",
+      "Big Data (Hadoop & Spark)",
+      "Cloud Data Platforms",
+    ],
+    careers: ["Data Engineer", "Big Data Engineer", "ETL Engineer"],
+  },
+
+  "frontend": {
+    title: "Frontend Developer",
+    tagline: "Create modern, responsive web interfaces",
+    duration: "3 Months",
+    level: "Beginner",
+    mode: "Offline / Online",
+    stack: ["HTML", "CSS", "JavaScript", "React"],
+    overview:
+      "Learn to build beautiful, fast and responsive user interfaces using modern frontend tools.",
+    modules: [
+      "HTML & CSS",
+      "JavaScript Fundamentals",
+      "Responsive Design",
+      "React Basics",
+      "Mini Projects",
+    ],
+    careers: ["Frontend Developer", "UI Developer", "Web Designer"],
+  },
+
+  "etl-developer": {
+    title: "ETL Developer",
+    tagline: "Enterprise data integration specialist",
+    duration: "4 Months",
+    level: "Intermediate",
+    mode: "Offline",
+    stack: ["Informatica", "SQL", "Data Warehousing"],
+    overview:
+      "Learn ETL concepts, data integration, transformation logic and real-time data workflows.",
+    modules: [
+      "Data Warehousing Concepts",
+      "ETL Architecture",
+      "Informatica PowerCenter",
+      "SQL for ETL",
+      "Real-Time ETL Scenarios",
+    ],
+    careers: ["ETL Developer", "Data Engineer", "BI Developer"],
+  },
+
+  "microsoft-tech": {
+    title: "Microsoft Technologies",
+    tagline: "Enterprise development with Microsoft stack",
+    duration: "4 Months",
+    level: "Beginner to Intermediate",
+    mode: "Offline",
+    stack: ["C#", ".NET", "SQL Server", "Azure"],
+    overview:
+      "Master core Microsoft technologies used in enterprise software development.",
+    modules: [
+      "C# Fundamentals",
+      ".NET Framework",
+      "SQL Server",
+      "Azure Basics",
+      "Mini Project",
+    ],
+    careers: ["Software Developer", ".NET Engineer"],
+  },
+
+  "salesforce": {
+    title: "Salesforce Engineer",
+    tagline: "Build & customize cloud CRM solutions",
     duration: "4 Months",
     level: "Beginner",
     mode: "Offline / Online",
-    stack: ["Python", "Pandas", "NumPy", "ML Basics"],
+    stack: ["Salesforce", "Apex", "LWC", "CRM"],
     overview:
-      "Learn how to analyze data, build ML models and solve real business problems using Python.",
+      "Learn Salesforce administration, development and automation with real business use cases.",
+    modules: [
+      "Salesforce Basics",
+      "Admin & Configuration",
+      "Apex Programming",
+      "Lightning Web Components",
+      "Real-Time Projects",
+    ],
+    careers: ["Salesforce Developer", "CRM Consultant"],
+  },
+
+  "python-fullstack": {
+    title: "Python Full Stack Developer",
+    tagline: "End-to-end development with Python",
+    duration: "5 Months",
+    level: "Beginner to Advanced",
+    mode: "Offline / Online",
+    stack: ["Python", "Django", "React", "PostgreSQL"],
+    overview:
+      "Become a full stack developer using Python frameworks and modern frontend tools.",
     modules: [
       "Python Fundamentals",
-      "Data Analysis",
-      "Statistics for Data Science",
-      "Machine Learning Basics",
-      "Capstone Project",
+      "Django Framework",
+      "REST APIs",
+      "Frontend with React",
+      "Deployment & Project",
     ],
-    careers: ["Data Analyst", "Junior Data Scientist", "Business Analyst"],
+    careers: ["Python Developer", "Full Stack Developer"],
   },
 };
+
 
 export default function CourseDetails() {
   const { courseId } = useParams();
